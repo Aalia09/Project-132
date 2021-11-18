@@ -1,5 +1,6 @@
 img = "";
 statuss = "";
+objects = [];
 
 function preload()
 {
@@ -28,4 +29,24 @@ function gotResult(error , results)
         console.error(error);
     }
     console.log(results);
+    objects = results;
+}
+
+function draw()
+{
+    image(img , 0, 0 , 640 , 420);
+    if ( statuss != "")
+    {
+        for (i = 0; i < objects.length; i++)
+        {
+            document.getElementById("status").innerHTML = "Status : Objects Detected";
+
+            fill("#eb4034");
+            percent = floor(objects[i].confidence * 100);
+            text(objects[i].label + " " + percent + "%" , objects[i].x + 15 , objects[i].y + 15);
+            noFill();
+            stroke("#eb4034")
+            rect(objects[i].x, objects[i].y , objects[i].width, objects[i].height);
+        }
+    }
 }
